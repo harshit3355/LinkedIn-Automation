@@ -1,4 +1,6 @@
 from selenium import webdriver
+from dotenvy import load_env, read_file
+from os import environ
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -9,7 +11,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
-
 
 def start_browser():
     """Function to start a new browser session."""
@@ -153,11 +154,14 @@ def go_to_next_page(driver):
         return False
 
 if __name__ == "__main__":
+    load_env(read_file('.env'))
+    email=environ.get('EMAIL')
+    password=environ.get('PASSWORD')
     while True:
         try:
             driver = start_browser()
-            email = "harshitnagila555@gmail.com"  # Replace with your LinkedIn email
-            password = "1ME*1tu*"  # Replace with your LinkedIn password
+            email = email  # Replace with your LinkedIn email
+            password = password  # Replace with your LinkedIn password
             driver = login_to_linkedin(driver, email, password)
 
             if driver:
